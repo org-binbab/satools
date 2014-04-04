@@ -14,7 +14,7 @@ sysconfig_dest=/etc/sysconfig/satools
 SYSCONFIG=$sysconfig_dest
 cp ./share/sysconfig $sysconfig_temp
 
-OSVARIANT=$(./bin/VARIANT)
+OSVARIANT=$(./bin/variant)
 if [ "$OSVARIANT" == 'unknown' ] ; then
   __err "Unkown OS. Cannot install."
 fi
