@@ -1,0 +1,31 @@
+#!/bin/bash
+source /etc/sysconfig/satools || exit 1
+source "${BASE_PATH}/bin/functions" || exit 1
+
+__loadVariant
+
+DEVICE="${1-eth1}"
+iface_file=$(printf $OS_NET_INTERFACE_FILE $DEVICE)
+
+[ ! -e $iface_file ] || __err "Interface already exists."
+
+template="$_os_templates/network/ifcfg-"
+
+case $DEVICE in
+  eth0)
+    template="${template}eth0"
+    ;;
+  *)
+    template="${template}ethX"
+    ;;
+esac
+
+tokens=(
+  DEVICE
+)
+
+__renderTemplate $template $iface_file $tokens
+
+echo "Created new interface $DEVICE."
+
+exit 0
